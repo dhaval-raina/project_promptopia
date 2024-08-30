@@ -1,0 +1,4 @@
+(125.20.222.182)
+dhavalrainamt
+O4znqn5Oi59SLUqM
+mongodb+srv://dhavalrainamt:O4znqn5Oi59SLUqM@promptopia.g7dkd.mongodb.net/?retryWrites=true&w=majority&appName=promptopia
