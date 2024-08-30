@@ -1,7 +1,6 @@
 "use client";
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import PromptCard from './PromptCard';
-import debounce  from 'lodash.debounce';
 
 const PromptCardList = ({ data, handleTagClick }) => {
     return (
