@@ -1,7 +1,7 @@
 import Nav from '@components/Nav';
 import Provider from '@components/Provider';
 import '@styles/globals.css';
-
+import { ToastContainer } from 'react-toastify';
 export const metadata = {
   title: "Promptopia",
   description: "Discover and share AP Prompts",
@@ -20,7 +20,7 @@ const RootLayout = ({ children }) => {
             {children}
           </main>
         </Provider>
-
+        {/* <ToastContainer /> */}
       </body>
     </html>
   )

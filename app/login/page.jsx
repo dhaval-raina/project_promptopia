@@ -2,13 +2,14 @@
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import useToast from '@hooks/useToast';
 
 export default function Login() {
   const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-
+  const { showToast } = useToast();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -20,7 +21,9 @@ export default function Login() {
 
     if (result.error) {
       setError(result.error);
+      showToast(result.error, 'error');
     } else {
+      showToast('Login successful!', 'success');
       router.push('/');
     }
   };
@@ -30,8 +33,8 @@ export default function Login() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen w-full">
-      <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+    <div className="flex items-center justify-center min-h-screen w-full ">
+      <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full glassmorphism">
         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
         {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
         <form onSubmit={handleSubmit}>

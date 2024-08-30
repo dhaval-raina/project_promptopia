@@ -52,6 +52,10 @@ const handler = NextAuth({
       }
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
+  jwt: {
+    secret: process.env.JWT_SECRET,
+  },
   callbacks: {
     async session({ session }) {
       const userSession = await User.findOne({
@@ -59,6 +63,12 @@ const handler = NextAuth({
       });
       session.user.id = userSession._id.toString();
       return session;
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
     },
     async signIn({ user, account, profile }) {
       if (account.provider !== 'google') {
