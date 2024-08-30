@@ -4,7 +4,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
+import { usePathname } from 'next/navigation';
 const Nav = () => {
+    const pathName = usePathname();
     const { data: session } = useSession();
     const [providers, setProviders] = useState(null);
     const [toggleDropdown, setToggleDropdown] = useState(false);
@@ -14,7 +16,11 @@ const Nav = () => {
             setProviders(response);
         }
         setUpProviders();
-    },[]);
+    }, []);
+
+    const handleSignOut = async () => {
+        await signOut({ callbackUrl: '/' });
+    };
     return (
         <nav className='flex flex-between w-full md-16 pt-3'>
             <Link href="/" className='flex gap-2 flex-center'>
@@ -27,7 +33,7 @@ const Nav = () => {
                         <Link href="/create-prompt" className='black_btn'>
                             Create Post
                         </Link>
-                        <button type='button' className='outline_btn' onClick={signOut}>
+                        <button type='button' className='outline_btn' onClick={handleSignOut}>
                             Sign Out
                         </button>
                         <Link href="/profile">
@@ -36,18 +42,21 @@ const Nav = () => {
                     </div>
                 ) : (
                     <>
-                        {providers && Object.values(providers).map((provider) => (
+                        {/* {providers && Object.values(providers).map((provider) => (
                             <button type="button" className="black_btn" onClick={() => signIn(provider.id)}>
                                 Sign In
                             </button>
-                        ))}
+                        ))} */}
+                        {pathName !== '/login' && (
+                            <Link className='black_btn' href="/login">Sign In</Link>
+                        )}
                     </>
                 )}
             </div>
             <div className='sm:hidden flex relative'>
                 {session?.user ? (
                     <div className='flex'>
-                        <Image src={session?.user?.image}  width={37} height={37} className='rounded-fill' alt='profile' onClick={() =>
+                        <Image src={session?.user?.image} width={37} height={37} className='rounded-fill' alt='profile' onClick={() =>
                             setToggleDropdown((prev) => !prev)
                         } />
                         {toggleDropdown && (
@@ -60,7 +69,7 @@ const Nav = () => {
                                 </Link>
                                 <button className='black_btn w-full mt-3' onClick={() => {
                                     setToggleDropdown(false);
-                                    signOut();
+                                    handleSignOut();
                                 }}>Sign Out</button>
                             </div>
                         )}
@@ -68,11 +77,14 @@ const Nav = () => {
 
                 ) : (
                     <>
-                        {providers && Object.values(providers).map((provider) => (
+                        {/* {providers && Object.values(providers).map((provider) => (
                             <button type="button" className="black_btn" onClick={() => signIn(provider.id)}>
                                 Sign In
                             </button>
-                        ))}
+                        ))} */}
+                        {pathName !== '/login' && (
+                            <Link className='black_btn' href="/login">Sign In</Link>
+                        )}
                     </>
                 )}
             </div>
