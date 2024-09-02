@@ -20,8 +20,8 @@ export default function Login() {
     });
 
     if (result.error) {
-      setError(result.error);
-      showToast(result.error, 'error');
+      setError("Credentails doesn`t match! try again");
+      // showToast(result.error, 'error');
     } else {
       showToast('Login successful!', 'success');
       router.push('/');

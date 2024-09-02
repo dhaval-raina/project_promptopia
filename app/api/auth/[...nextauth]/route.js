@@ -58,11 +58,21 @@ const handler = NextAuth({
   },
   callbacks: {
     async session({ session }) {
-      const userSession = await User.findOne({
-        email: session.user.email,
-      });
-      session.user.id = userSession._id.toString();
-      return session;
+      
+      try {
+        // Connect to the database
+        await connectToDB();
+        
+        // Retrieve user details from the database
+        const userSession = await User.findOne({
+          email: session.user.email,
+        });
+        session.user.id = userSession._id.toString();
+        return session;
+      } catch (error) {
+        console.log('Session callback error:', error.message);
+        return session;
+      }
     },
     async jwt({ token, user }) {
       if (user) {
@@ -103,6 +113,17 @@ const handler = NextAuth({
         console.log("Error checking if user exists: ", error.message);
         return false;
       }
+    },
+  },
+  cookies: {
+    sessionToken: {
+      name: `next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: 'Lax',
+        path: '/',
+        secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+      },
     },
   },
 });

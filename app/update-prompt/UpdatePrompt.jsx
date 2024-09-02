@@ -4,6 +4,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Form from '@components/Form';
+import useToast from '@hooks/useToast';
 
 const UpdatePrompt = () => {
     const searchParams = useSearchParams();
@@ -14,7 +15,7 @@ const UpdatePrompt = () => {
         tag: ''
     });
     const [submitting, setSubmitting] = useState(false);
-
+    const { showToast } = useToast();
     const updatePrompt = async (e) => {
         e.preventDefault();
         if (!promptId) {
@@ -35,8 +36,10 @@ const UpdatePrompt = () => {
             });
 
             if (response.ok) {
+                showToast('Prompt updated successfully!', 'success');
                 router.push('/profile');
             } else {
+                showToast('Failed to update prompt: '+response.statusText, 'error');
                 console.error('Failed to update prompt:', response.statusText);
             }
         } catch (error) {

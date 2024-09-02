@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Form from '@components/Form';
+import useToast from '@hooks/useToast';
+
 const CreatePrompt = () => {
     const router = useRouter();
     const {data:session} = useSession();
@@ -11,6 +13,7 @@ const CreatePrompt = () => {
         tag:''
     });
     const [submitting, setSubmitting] = useState(false);
+    const { showToast } = useToast();
     const createPrompt = async (e) => {
         e.preventDefault();
         setSubmitting(true);
@@ -25,6 +28,7 @@ const CreatePrompt = () => {
             })
 
             if(response.ok) {
+                showToast('New Prompt created successfully!', 'success');
                 router.push('/');
             }
             

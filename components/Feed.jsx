@@ -11,6 +11,7 @@ const PromptCardList = ({ data, handleTagClick }) => {
         </div>
     )
 }
+
 const Feed = () => {
     const [searchText, setSearchText] = useState("");
     const [posts, setPosts] = useState([]);
@@ -26,7 +27,6 @@ const Feed = () => {
                 
             } catch (error) {
                 console.log("Failed to fetch posts", error);
-                
             }
         }
         fetchPosts();
