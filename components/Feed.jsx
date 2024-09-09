@@ -1,7 +1,6 @@
 "use client";
-import { useCallback, useEffect, useState, lazy } from 'react';
-import Loading from '@app/loading';
-const PromptCardList = lazy(() => import('./PromptCardList'));
+import { useCallback, useEffect, useState } from 'react';
+import PromptCardList from './PromptCardList';
 import {XMarkIcon} from '@heroicons/react/24/solid';
 const Feed = () => {
     const [searchText, setSearchText] = useState("");
@@ -83,12 +82,12 @@ const Feed = () => {
                     </button>
                 )}
             </form>
-            {isLoading ? <Loading /> : (
+            {/* {isLoading ? <Loading /> : ( */}
                 <PromptCardList
                     data={filteredPosts}
                     handleTagClick={handleTagClick}
                 />
-            )}
+            {/* )} */}
         </section>
     );
 };

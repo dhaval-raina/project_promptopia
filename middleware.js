@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
-console.log('Middleware is running');
+//console.log('Middleware is running');
 export const config = {
   matcher: ['/login'],
 };
